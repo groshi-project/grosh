@@ -1,2 +1,3 @@
 build:
-	go build -o groshi ./main.go
+	mkdir -p ./build/
+	go build -o ./build/grosh ./main.go
