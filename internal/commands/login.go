@@ -4,8 +4,8 @@ import (
 	"errors"
 	"github.com/groshi-project/go-groshi"
 	"github.com/groshi-project/grosh/internal/credentials"
+	"github.com/groshi-project/grosh/internal/input"
 	"github.com/groshi-project/grosh/internal/output"
-	"github.com/groshi-project/grosh/internal/prompts"
 	"github.com/urfave/cli/v2"
 )
 
@@ -42,20 +42,14 @@ func AuthCommand(ctx *cli.Context) error {
 	}
 
 	client := go_groshi.NewGroshiAPIClient(url, "")
-	rawResponse, err := client.AuthLogin(username, password)
+	authData, err := client.AuthLogin(username, password)
 	if err != nil {
 		return err
 	}
-
-	response, err := rawResponse.Map()
-	if err != nil {
-		return err
-	}
-	jwt := response["token"].(string)
 
 	output.PlusLogger.Printf("Authorized at groshi server at %v as @%v.", url, username)
 
-	authCredentials := credentials.NewCredentials(url, jwt)
+	authCredentials := credentials.NewCredentials(url, authData.Token)
 	storageFilePath := credentials.GetCredentialsStorageFilePath()
 	if err := authCredentials.WriteToFile(storageFilePath); err != nil {
 		return err

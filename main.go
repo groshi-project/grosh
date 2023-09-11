@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/groshi-project/grosh/internal/commands"
+	"github.com/groshi-project/grosh/internal/middlewares"
 	"github.com/groshi-project/grosh/internal/output"
 	"github.com/urfave/cli/v2"
 	"log"
@@ -58,7 +59,7 @@ func main() {
 			{
 				Name:        "logout",
 				Category:    categoryUser,
-				Usage:       "log out from groshi and remove locally stored credentials",
+				Usage:       "remove locally stored credentials",
 				UsageText:   "groshi logout",
 				Description: "description",
 
@@ -71,7 +72,7 @@ func main() {
 				Name:        "new",
 				Category:    categoryTransactions,
 				Usage:       "create new transaction",
-				UsageText:   "groshi new [--description] [--date] <AMOUNT> <CURRENCY> ",
+				UsageText:   "groshi new [--description=<TEXT>] [--timestamp=<TIME>] <AMOUNT> <CURRENCY> ",
 				Description: "create new transaction",
 
 				Flags: []cli.Flag{
@@ -81,32 +82,22 @@ func main() {
 						Aliases: []string{"d"},
 					},
 					&cli.StringFlag{
-						Name:  "date",
+						Name:  "timestamp",
 						Usage: "date of transaction",
 					},
 				},
 
-				Action:       commands.NewCommand,
+				Action:       middlewares.ArgsCountMiddleware(2, commands.NewCommand),
 				OnUsageError: handleUsageError,
 			},
 			{
 				Name:        "list",
 				Category:    categoryTransactions,
 				Usage:       "list transactions for given period",
-				UsageText:   "groshi list --start-time=<START_TIME> --end-time=<END_TIME> [PERIOD]",
+				UsageText:   "groshi list --end-time=<TIME> <START-TIME>",
 				Description: "list transactions for given period",
 
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:    "period",
-						Usage:   "time period",
-						Aliases: []string{"p"},
-					},
-					&cli.StringFlag{
-						Name:    "start-time",
-						Usage:   "start time",
-						Aliases: []string{"s"},
-					},
 					&cli.StringFlag{
 						Name:    "end-time",
 						Usage:   "end time",
@@ -114,7 +105,26 @@ func main() {
 					},
 				},
 
-				Action:       commands.ListCommand,
+				Action:       middlewares.ArgsCountMiddleware(1, commands.ListCommand),
+				OnUsageError: handleUsageError,
+			},
+			{
+				Name:        "summary",
+				Category:    categoryTransactions,
+				Aliases:     []string{"sum"},
+				Usage:       "show summary of transactions for given period",
+				UsageText:   "groshi summary --end-time=<END-TIME> <START-TIME> <CURRENCY>",
+				Description: "description",
+
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "end-time",
+						Usage:   "end time",
+						Aliases: []string{"e"},
+					},
+				},
+
+				Action:       middlewares.ArgsCountMiddleware(2, commands.SummaryCommand),
 				OnUsageError: handleUsageError,
 			},
 		},

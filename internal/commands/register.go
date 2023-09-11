@@ -3,8 +3,8 @@ package commands
 import (
 	"errors"
 	go_groshi "github.com/groshi-project/go-groshi"
+	"github.com/groshi-project/grosh/internal/input"
 	"github.com/groshi-project/grosh/internal/output"
-	"github.com/groshi-project/grosh/internal/prompts"
 	"github.com/urfave/cli/v2"
 )
 
@@ -47,7 +47,7 @@ func RegisterCommand(ctx *cli.Context) error {
 	}
 
 	output.PlusLogger.Printf("Created new groshi user @%v.", username)
-	output.TipLogger.Printf("Now you can authorize using `groshi login %v %v` command.", url, username)
+	output.TipLogger.Printf("Now you can authorize using `grosh login %v %v` command.", url, username)
 
 	return nil
 }
