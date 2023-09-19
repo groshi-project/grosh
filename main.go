@@ -103,6 +103,11 @@ func main() {
 						Usage:   "end time",
 						Aliases: []string{"e"},
 					},
+					&cli.StringFlag{
+						Name:    "currency",
+						Usage:   "currecny",
+						Aliases: []string{"c"},
+					},
 				},
 
 				Action:       middlewares.ArgsCountMiddleware(1, commands.ListCommand),

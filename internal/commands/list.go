@@ -35,13 +35,23 @@ func ListCommand(ctx *cli.Context) error {
 		endTime = nil
 	}
 
+	// option --currency:
+	currencyString := ctx.String("currency")
+
+	var currency *string
+	if currencyString != "" {
+		currency = &currencyString
+	} else {
+		currency = nil
+	}
+
 	authData, err := credentials.NewCredentialsFromCredentialsFile()
 	if err != nil {
 		return err
 	}
 
 	groshiClient := go_groshi.NewGroshiAPIClient(authData.URL, authData.JWT)
-	transactions, err := groshiClient.TransactionsReadMany(startTime, endTime)
+	transactions, err := groshiClient.TransactionsReadMany(startTime, endTime, currency)
 	if err != nil {
 		return err
 	}
