@@ -7,14 +7,14 @@ import (
 )
 
 func PrintTransactions(transactions []*go_groshi.Transaction) error {
-	tbl := table.New("DATE", "AMOUNT", "CURRENCY", "DESCRIPTION", "UUID")
+	tbl := table.New("UUID", "DATE", "AMOUNT", "CURRENCY", "DESCRIPTION")
 	for _, transaction := range transactions {
 		tbl.AddRow(
-			transaction.Timestamp.Format(time.DateTime),
+			transaction.UUID,
+			transaction.Timestamp.In(time.Local).Format(time.DateTime),
 			transaction.Amount/100,
 			transaction.Currency,
 			transaction.Description,
-			transaction.UUID,
 		)
 	}
 	tbl.Print()
