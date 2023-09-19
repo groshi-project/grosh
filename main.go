@@ -72,7 +72,7 @@ func main() {
 				Name:        "new",
 				Category:    categoryTransactions,
 				Usage:       "create new transaction",
-				UsageText:   "groshi new [--description=<TEXT>] [--timestamp=<TIME>] <AMOUNT> <CURRENCY> ",
+				UsageText:   "groshi new [--description=<TEXT>] [--timestamp=<TIME>] <AMOUNT> <CURRENCY>",
 				Description: "create new transaction",
 
 				Flags: []cli.Flag{
@@ -93,8 +93,8 @@ func main() {
 			{
 				Name:        "list",
 				Category:    categoryTransactions,
-				Usage:       "list transactions for given period",
-				UsageText:   "groshi list --end-time=<TIME> <START-TIME>",
+				Usage:       "list transactions for given period and optionally in given currency",
+				UsageText:   "groshi list --currency=<CURRENCY> --end-time=<TIME> <START-TIME>",
 				Description: "list transactions for given period",
 
 				Flags: []cli.Flag{
@@ -105,7 +105,7 @@ func main() {
 					},
 					&cli.StringFlag{
 						Name:    "currency",
-						Usage:   "currecny",
+						Usage:   "currency",
 						Aliases: []string{"c"},
 					},
 				},
@@ -117,8 +117,8 @@ func main() {
 				Name:        "summary",
 				Category:    categoryTransactions,
 				Aliases:     []string{"sum"},
-				Usage:       "show summary of transactions for given period",
-				UsageText:   "groshi summary --end-time=<END-TIME> <START-TIME> <CURRENCY>",
+				Usage:       "show summary of transactions for given period and optionally in given currency",
+				UsageText:   "groshi summary --currency=<CURRENCY> --end-time=<END-TIME> <START-TIME> <CURRENCY>",
 				Description: "description",
 
 				Flags: []cli.Flag{
