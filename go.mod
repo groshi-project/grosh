@@ -4,7 +4,7 @@ go 1.21.0
 
 require (
 	github.com/Wessie/appdirs v0.0.0-20141031215813-6573e894f8e2
-	github.com/groshi-project/go-groshi v0.1.8
+	github.com/groshi-project/go-groshi v0.1.9
 	github.com/markusmobius/go-dateparser v1.2.1
 	github.com/rodaine/table v1.1.0
 	github.com/urfave/cli/v2 v2.25.7
