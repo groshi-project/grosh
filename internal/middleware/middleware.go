@@ -1,11 +1,11 @@
-package middlewares
+package middleware
 
 import (
 	"fmt"
 	"github.com/urfave/cli/v2"
 )
 
-func ArgsCountMiddleware(expectedArgsCount int, action cli.ActionFunc) cli.ActionFunc {
+func ArgumentsCount(expectedArgsCount int, action cli.ActionFunc) cli.ActionFunc {
 	return func(ctx *cli.Context) error {
 		argsLen := ctx.Args().Len()
 		if argsLen != expectedArgsCount {

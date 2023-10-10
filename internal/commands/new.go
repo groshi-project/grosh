@@ -1,49 +1,47 @@
 package commands
 
 import (
+	"errors"
 	groshi "github.com/groshi-project/go-groshi"
 	"github.com/groshi-project/grosh/internal/credentials"
+	"github.com/groshi-project/grosh/internal/input"
 	"github.com/groshi-project/grosh/internal/output"
-	"github.com/groshi-project/grosh/internal/timeutil"
 	"github.com/urfave/cli/v2"
-	"strconv"
 	"strings"
 	"time"
 )
 
 // NewCommand is
-// grosh new <AMOUNT> <CURRENCY> --description=<TEXT> --timestamp=<TIME>
+// grosh new [--description=<TEXT>] [--timestamp=<TIME>] <AMOUNT> <CURRENCY>
 func NewCommand(ctx *cli.Context) error {
-	// required arguments
+	var err error
 	args := ctx.Args()
-	amountRaw := args.Get(0)
-	currency := args.Get(1)
 
-	// options
-	description := ctx.String("description")
-	timestampRaw := ctx.String("timestamp")
-
-	// parse `amountString` as `amount`
-	amount, err := strconv.ParseFloat(amountRaw, 32)
-	if err != nil {
+	// required argument AMOUNT:
+	amountString := args.Get(0)
+	var amount float64
+	if amount, err = input.ParseAmount(amountString); err != nil {
 		return err
 	}
 
-	// currency to upper case
-	currency = strings.ToUpper(currency) // todo: also validate currency code
-
-	var timestamp *time.Time
-	if timestampRaw != "" {
-		timestampValue, err := timeutil.ParseDate(timestampRaw)
-		if err != nil {
-			return err
-		}
-		timestamp = &timestampValue
-	} else {
-		timestamp = nil
+	// required argument CURRENCY:
+	currency := args.Get(1)
+	currency = strings.ToUpper(currency)
+	if len(currency) != 3 {
+		return errors.New("invalid currency format")
 	}
 
-	authData, err := credentials.NewCredentialsFromCredentialsFile()
+	// option --description:
+	description := ctx.String("description")
+
+	// option --timestamp:
+	timestampString := ctx.String("timestamp")
+	var timestamp *time.Time
+	if timestamp, err = input.ParseOptionalTime(timestampString); err != nil {
+		return err
+	}
+
+	authData, err := credentials.ReadFromDefaultPath()
 	if err != nil {
 		return err
 	}
@@ -56,7 +54,7 @@ func NewCommand(ctx *cli.Context) error {
 		return err
 	}
 
-	output.PlusLogger.Printf(
+	output.Plus.Printf(
 		"Successfully created a new transaction (uuid: %v).", transaction.UUID,
 	)
 

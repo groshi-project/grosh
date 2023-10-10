@@ -20,7 +20,7 @@ func CommandLogout(_ *cli.Context) error {
 	if err := os.Remove(credentialsStorageFilePath); err != nil {
 		return err
 	}
-	output.MinusLogger.Printf("Successfully removed credentials storage file %v", credentialsStorageFilePath)
+	output.Minus.Printf("Successfully removed credentials storage file %v", credentialsStorageFilePath)
 
 	return nil
 }

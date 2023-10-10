@@ -8,6 +8,8 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// RegisterCommand ...
+// grosh register <URL> [username]
 func RegisterCommand(ctx *cli.Context) error {
 	args := ctx.Args()
 	argsCount := args.Len()
@@ -15,30 +17,31 @@ func RegisterCommand(ctx *cli.Context) error {
 		return ctx.Command.OnUsageError(ctx, errors.New("invalid number of args"), true)
 	}
 
-	url := args.Get(0) // required argument url
+	// required argument URL:
+	url := args.Get(0)
 
-	username := args.Get(1) // optional argument username
+	// optional argument USERNAME:
+	username := args.Get(1)
 
-	if username == "" { // if username was not provided as argument
+	if username == "" { // if username was not provided
 		var err error
-		username, err = prompts.ReadString("Username: ")
-		if err != nil {
+		if username, err = input.ReadString("Username: "); err != nil {
 			return err
 		}
 	}
 
-	password1, err := prompts.ReadPassword("Password: ")
+	password1, err := input.ReadPassword("Password: ")
 	if err != nil {
 		return err
 	}
 
-	password2, err := prompts.ReadPassword("Repeat password: ")
+	password2, err := input.ReadPassword("Repeat password: ")
 	if err != nil {
 		return err
 	}
 
 	if password1 != password2 {
-		return errors.New("passwords does not match")
+		return errors.New("passwords do not match")
 	}
 
 	groshiClient := groshi.NewAPIClient(url, "")
@@ -46,8 +49,8 @@ func RegisterCommand(ctx *cli.Context) error {
 		return err
 	}
 
-	output.PlusLogger.Printf("Created new groshi user @%v.", username)
-	output.TipLogger.Printf("Now you can authorize using `grosh login %v %v` command.", url, username)
+	output.Plus.Printf("Created new groshi user @%v.", username)
+	output.Tip.Printf("Now you can authorize using `grosh login %v %v` command.", url, username)
 
 	return nil
 }

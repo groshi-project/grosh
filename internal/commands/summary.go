@@ -17,6 +17,6 @@ func SummaryCommand(ctx *cli.Context) error {
 	endTimeString := ctx.String("end-time")
 	// todo....
 
-	output.StdoutLogger.Println(startTimeString, currency, endTimeString)
+	output.Stdout.Println(startTimeString, currency, endTimeString)
 	return nil
 }

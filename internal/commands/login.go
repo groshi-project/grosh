@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"errors"
 	groshi "github.com/groshi-project/go-groshi"
 	"github.com/groshi-project/grosh/internal/credentials"
 	"github.com/groshi-project/grosh/internal/input"
@@ -11,23 +10,18 @@ import (
 
 func AuthCommand(ctx *cli.Context) error {
 	args := ctx.Args()
-	argsCount := args.Len()
-	if argsCount < 1 || argsCount > 3 {
-		return ctx.Command.OnUsageError(ctx, errors.New("invalid number of arguments"), true)
-	}
 
 	// url is a required argument
-	url := ctx.Args().Get(0)
+	url := args.Get(0)
 
 	// username and password are optional arguments
-	username := ctx.Args().Get(1)
-	password := ctx.Args().Get(2)
+	username := args.Get(1)
+	password := args.Get(2)
 
 	// read username from stdout if it was not provided
 	if username == "" {
 		var err error
-		username, err = prompts.ReadString("Username: ")
-		if err != nil {
+		if username, err = input.ReadString("Username: "); err != nil {
 			return err
 		}
 	}
@@ -35,8 +29,7 @@ func AuthCommand(ctx *cli.Context) error {
 	// read password from stdout if it was not provided
 	if password == "" {
 		var err error
-		password, err = prompts.ReadPassword("Password: ")
-		if err != nil {
+		if password, err = input.ReadPassword("Password: "); err != nil {
 			return err
 		}
 	}
@@ -47,15 +40,15 @@ func AuthCommand(ctx *cli.Context) error {
 		return err
 	}
 
-	output.PlusLogger.Printf("Authorized at groshi server at %v as @%v.", url, username)
+	output.Plus.Printf("Authorized at groshi server at %v as %v.", url, username)
 
-	authCredentials := credentials.NewCredentials(url, authData.Token)
+	authCredentials := credentials.New(url, authData.Token)
 	storageFilePath := credentials.GetCredentialsStorageFilePath()
 	if err := authCredentials.WriteToFile(storageFilePath); err != nil {
 		return err
 	}
 
-	output.PlusLogger.Printf("Stored credentials locally at %v.", storageFilePath)
+	output.Plus.Printf("Stored credentials locally at %v.", storageFilePath)
 
 	return nil
 }

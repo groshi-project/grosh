@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/groshi-project/grosh/internal/commands"
-	"github.com/groshi-project/grosh/internal/middlewares"
+	"github.com/groshi-project/grosh/internal/middleware"
 	"github.com/groshi-project/grosh/internal/output"
 	"github.com/urfave/cli/v2"
 	"log"
@@ -12,14 +12,14 @@ import (
 const ErrorExitCode = 1
 
 func handleUsageError(ctx *cli.Context, err error, _ bool) error {
-	output.ErrorLogger.Println(err)
-	output.StdoutLogger.Printf("usage: %v", ctx.Command.UsageText)
+	output.Error.Println(err)
+	output.Stdout.Printf("usage: %v", ctx.Command.UsageText)
 	os.Exit(ErrorExitCode)
 	return nil
 }
 
 func handleCommandNotFoundError(ctx *cli.Context, command string) {
-	output.ErrorLogger.Printf("'%v' is not a %v command. See `%v --help`", command, ctx.App.Name, ctx.App.Name)
+	output.Error.Printf("'%v' is not a %v command. See `%v --help`", command, ctx.App.Name, ctx.App.Name)
 	os.Exit(ErrorExitCode)
 }
 
@@ -72,7 +72,7 @@ func main() {
 				Name:        "new",
 				Category:    categoryTransactions,
 				Usage:       "create new transaction",
-				UsageText:   "groshi new [--description=<TEXT>] [--timestamp=<TIME>] <AMOUNT> <CURRENCY>",
+				UsageText:   "groshi new [--timestamp=<TIME>] [--description=<TEXT>] <AMOUNT> <CURRENCY>",
 				Description: "create new transaction",
 
 				Flags: []cli.Flag{
@@ -87,17 +87,22 @@ func main() {
 					},
 				},
 
-				Action:       middlewares.ArgsCountMiddleware(2, commands.NewCommand),
+				Action:       middleware.ArgumentsCount(2, commands.NewCommand),
 				OnUsageError: handleUsageError,
 			},
 			{
 				Name:        "list",
 				Category:    categoryTransactions,
 				Usage:       "list transactions for given period and optionally in given currency",
-				UsageText:   "groshi list --currency=<CURRENCY> --end-time=<TIME> <START-TIME>",
+				UsageText:   "groshi list [--uuid] [--currency=<CURRENCY>] [--end-time=<TIME>] <START-TIME>",
 				Description: "list transactions for given period",
 
 				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:    "uuid",
+						Usage:   "display transaction UUIDs",
+						Aliases: []string{"u"},
+					},
 					&cli.StringFlag{
 						Name:    "end-time",
 						Usage:   "end time",
@@ -110,7 +115,7 @@ func main() {
 					},
 				},
 
-				Action:       middlewares.ArgsCountMiddleware(1, commands.ListCommand),
+				Action:       middleware.ArgumentsCount(1, commands.ListCommand),
 				OnUsageError: handleUsageError,
 			},
 			{
@@ -118,7 +123,7 @@ func main() {
 				Category:    categoryTransactions,
 				Aliases:     []string{"sum"},
 				Usage:       "show summary of transactions for given period and optionally in given currency",
-				UsageText:   "groshi summary --currency=<CURRENCY> --end-time=<END-TIME> <START-TIME> <CURRENCY>",
+				UsageText:   "groshi summary [--end-time=<END-TIME>] <START-TIME> <CURRENCY>",
 				Description: "description",
 
 				Flags: []cli.Flag{
@@ -129,7 +134,7 @@ func main() {
 					},
 				},
 
-				Action:       middlewares.ArgsCountMiddleware(2, commands.SummaryCommand),
+				Action:       middleware.ArgumentsCount(2, commands.SummaryCommand),
 				OnUsageError: handleUsageError,
 			},
 		},
@@ -142,8 +147,6 @@ func main() {
 		Authors: []*cli.Author{
 			{"jieggii", "jieggii@protonmail.com"},
 		},
-
-		// Copyright of the binary if any
 		Copyright: "(c) groshi-project 2023",
 	}
 

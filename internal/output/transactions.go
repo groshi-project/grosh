@@ -1,23 +1,32 @@
 package output
 
 import (
-	go_groshi "github.com/groshi-project/go-groshi"
+	groshi "github.com/groshi-project/go-groshi"
 	"github.com/rodaine/table"
 	"time"
 )
 
-func PrintTransactions(transactions []*go_groshi.Transaction) error {
-	tbl := table.New("UUID", "DATE", "AMOUNT", "CURRENCY", "DESCRIPTION")
+func Transactions(transactions []*groshi.Transaction, displayUUID bool) error {
+	headers := []any{"DATE", "AMOUNT", "CURRENCY", "DESCRIPTION"}
+	if displayUUID {
+		headers = append(headers, "UUID")
+	}
+
+	tbl := table.New(headers...)
+
 	for _, transaction := range transactions {
-		tbl.AddRow(
-			transaction.UUID,
+		cols := []any{
 			transaction.Timestamp.In(time.Local).Format(time.DateTime),
-			transaction.Amount/100,
+			transaction.Amount / 100,
 			transaction.Currency,
 			transaction.Description,
-		)
+		}
+		if displayUUID {
+			cols = append(cols, transaction.UUID)
+		}
+		tbl.AddRow(cols...)
 	}
-	tbl.Print()
 
+	tbl.Print()
 	return nil
 }

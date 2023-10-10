@@ -26,11 +26,11 @@ type Credentials struct {
 	JWT string
 }
 
-func NewCredentials(url string, jwt string) *Credentials {
+func New(url string, jwt string) *Credentials {
 	return &Credentials{URL: url, JWT: jwt}
 }
 
-func NewCredentialsFromFile(filepath string) (*Credentials, error) {
+func ReadFromPath(filepath string) (*Credentials, error) {
 	data, err := os.ReadFile(filepath)
 	if err != nil {
 		return nil, err
@@ -44,9 +44,9 @@ func NewCredentialsFromFile(filepath string) (*Credentials, error) {
 	return &credentials, nil
 }
 
-func NewCredentialsFromCredentialsFile() (*Credentials, error) {
+func ReadFromDefaultPath() (*Credentials, error) {
 	credentialsFilePath := GetCredentialsStorageFilePath()
-	return NewCredentialsFromFile(credentialsFilePath)
+	return ReadFromPath(credentialsFilePath)
 }
 
 func (c *Credentials) WriteToFile(filepath string) error {
