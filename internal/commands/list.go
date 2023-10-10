@@ -39,7 +39,7 @@ func ListCommand(ctx *cli.Context) error {
 		return err
 	}
 
-	groshiClient := groshi.NewAPIClient(authData.URL, authData.JWT)
+	groshiClient := groshi.NewAPIClient(authData.URL, authData.Token)
 	transactions, err := groshiClient.TransactionsReadMany(startTime, endTime, currency)
 	if err != nil {
 		return err

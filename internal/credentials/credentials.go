@@ -20,14 +20,14 @@ func GetCredentialsStorageFilePath() string {
 
 type Credentials struct {
 	// URL of the groshi server
-	URL string
+	URL string `json:"url"`
 
-	// JWT for authorizing at the server
-	JWT string
+	// Token for authorizing at the server
+	Token string `json:"token"`
 }
 
 func New(url string, jwt string) *Credentials {
-	return &Credentials{URL: url, JWT: jwt}
+	return &Credentials{URL: url, Token: jwt}
 }
 
 func ReadFromPath(filepath string) (*Credentials, error) {

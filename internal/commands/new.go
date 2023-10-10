@@ -8,19 +8,17 @@ import (
 	"github.com/groshi-project/grosh/internal/output"
 	"github.com/urfave/cli/v2"
 	"strings"
-	"time"
 )
 
 // NewCommand is
 // grosh new [--description=<TEXT>] [--timestamp=<TIME>] <AMOUNT> <CURRENCY>
 func NewCommand(ctx *cli.Context) error {
-	var err error
 	args := ctx.Args()
 
 	// required argument AMOUNT:
 	amountString := args.Get(0)
-	var amount float64
-	if amount, err = input.ParseAmount(amountString); err != nil {
+	amount, err := input.ParseAmount(amountString)
+	if err != nil {
 		return err
 	}
 
@@ -36,8 +34,8 @@ func NewCommand(ctx *cli.Context) error {
 
 	// option --timestamp:
 	timestampString := ctx.String("timestamp")
-	var timestamp *time.Time
-	if timestamp, err = input.ParseOptionalTime(timestampString); err != nil {
+	timestamp, err := input.ParseOptionalTime(timestampString)
+	if err != nil {
 		return err
 	}
 
@@ -46,7 +44,7 @@ func NewCommand(ctx *cli.Context) error {
 		return err
 	}
 
-	groshiClient := groshi.NewAPIClient(authData.URL, authData.JWT)
+	groshiClient := groshi.NewAPIClient(authData.URL, authData.Token)
 	transaction, err := groshiClient.TransactionsCreate(
 		int(amount*100), currency, &description, timestamp,
 	)
