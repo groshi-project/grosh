@@ -19,6 +19,8 @@ github.com/groshi-project/go-groshi v0.1.8 h1:Vvo1Q7lk2ur1pjNHSFtv2rpBCNggycEHVB
 github.com/groshi-project/go-groshi v0.1.8/go.mod h1:GCSvYNc/nQrOQIZ7iYh7JhOyg9KQBesnYDTicz9b+C8=
 github.com/groshi-project/go-groshi v0.1.9 h1:GaiGsrnLyoiNy9BtlSSvE+tiQkkKHzgfwnh8fNW9014=
 github.com/groshi-project/go-groshi v0.1.9/go.mod h1:GCSvYNc/nQrOQIZ7iYh7JhOyg9KQBesnYDTicz9b+C8=
+github.com/groshi-project/go-groshi v0.1.12 h1:K/zids14YJOOTj+bD9VVJELY8MicXYGTjIrvKrtTOqY=
+github.com/groshi-project/go-groshi v0.1.12/go.mod h1:GCSvYNc/nQrOQIZ7iYh7JhOyg9KQBesnYDTicz9b+C8=
 github.com/hablullah/go-hijri v1.0.2 h1:drT/MZpSZJQXo7jftf5fthArShcaMtsal0Zf/dnmp6k=
 github.com/hablullah/go-hijri v1.0.2/go.mod h1:OS5qyYLDjORXzK4O1adFw9Q5WfhOcMdAKglDkcTxgWQ=
 github.com/hablullah/go-juliandays v1.0.0 h1:A8YM7wIj16SzlKT0SRJc9CD29iiaUzpBLzh5hr0/5p0=
