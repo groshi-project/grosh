@@ -2,7 +2,7 @@ package commands
 
 import (
 	"errors"
-	go_groshi "github.com/groshi-project/go-groshi"
+	groshi "github.com/groshi-project/go-groshi"
 	"github.com/groshi-project/grosh/internal/input"
 	"github.com/groshi-project/grosh/internal/output"
 	"github.com/urfave/cli/v2"
@@ -41,7 +41,7 @@ func RegisterCommand(ctx *cli.Context) error {
 		return errors.New("passwords does not match")
 	}
 
-	groshiClient := go_groshi.NewGroshiAPIClient(url, "")
+	groshiClient := groshi.NewAPIClient(url, "")
 	if _, err := groshiClient.UserCreate(username, password1); err != nil {
 		return err
 	}

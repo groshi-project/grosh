@@ -2,7 +2,7 @@ package commands
 
 import (
 	"errors"
-	"github.com/groshi-project/go-groshi"
+	groshi "github.com/groshi-project/go-groshi"
 	"github.com/groshi-project/grosh/internal/credentials"
 	"github.com/groshi-project/grosh/internal/input"
 	"github.com/groshi-project/grosh/internal/output"
@@ -41,7 +41,7 @@ func AuthCommand(ctx *cli.Context) error {
 		}
 	}
 
-	client := go_groshi.NewGroshiAPIClient(url, "")
+	client := groshi.NewAPIClient(url, "")
 	authData, err := client.AuthLogin(username, password)
 	if err != nil {
 		return err

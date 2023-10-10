@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-func CommandLogout(ctx *cli.Context) error {
+func CommandLogout(_ *cli.Context) error {
 	credentialsStorageFilePath := credentials.GetCredentialsStorageFilePath()
 
 	_, err := os.Stat(credentialsStorageFilePath)

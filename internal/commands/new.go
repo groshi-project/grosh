@@ -1,7 +1,7 @@
 package commands
 
 import (
-	go_groshi "github.com/groshi-project/go-groshi"
+	groshi "github.com/groshi-project/go-groshi"
 	"github.com/groshi-project/grosh/internal/credentials"
 	"github.com/groshi-project/grosh/internal/output"
 	"github.com/groshi-project/grosh/internal/timeutil"
@@ -48,7 +48,7 @@ func NewCommand(ctx *cli.Context) error {
 		return err
 	}
 
-	groshiClient := go_groshi.NewGroshiAPIClient(authData.URL, authData.JWT)
+	groshiClient := groshi.NewAPIClient(authData.URL, authData.JWT)
 	transaction, err := groshiClient.TransactionsCreate(
 		int(amount*100), currency, &description, timestamp,
 	)
