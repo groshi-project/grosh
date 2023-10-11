@@ -8,6 +8,13 @@ import (
 	"time"
 )
 
+func ParseOptionalString(x string) *string {
+	if x == "" {
+		return nil
+	}
+	return &x
+}
+
 func ParseTime(x string) (time.Time, error) {
 	currentTime := time.Now()
 	result, err := dateparser.Parse(&dateparser.Configuration{
@@ -27,19 +34,23 @@ func ParseOptionalTime(x string) (*time.Time, error) {
 	return &result, nil
 }
 
-func ParseOptionalString(x string) *string {
-	if x == "" {
-		return nil
-	}
-	return &x
-}
-
 func ParseAmount(x string) (float64, error) {
 	lastChar := string(x[len(x)-1])
 	if lastChar == "-" {
 		x = "-" + x[0:len(x)-1]
 	}
 	return strconv.ParseFloat(x, 64)
+}
+
+func ParseOptionalAmount(x string) (*float64, error) {
+	if x == "" {
+		return nil, nil
+	}
+	amount, err := ParseAmount(x)
+	if err != nil {
+		return nil, err
+	}
+	return &amount, nil
 }
 
 func ParseCurrency(x string) (string, error) {

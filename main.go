@@ -138,7 +138,40 @@ func main() {
 				Action:       middleware.ArgumentsCount(2, commands.SummaryCommand),
 				OnUsageError: handleUsageError,
 			},
+			{
+				Name:        "update",
+				Category:    categoryTransactions,
+				Aliases:     []string{"upd"},
+				Usage:       "update transaction",
+				UsageText:   "groshi update [--amount=AMOUNT] [--currency=CURRENCY] [--description] [--timestamp] <UUID>",
+				Description: "updates transaction by its UUID",
 
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "amount",
+						Usage:   "new amount",
+						Aliases: []string{"a"},
+					},
+					&cli.StringFlag{
+						Name:    "currency",
+						Usage:   "new currency",
+						Aliases: []string{"c"},
+					},
+					&cli.StringFlag{
+						Name:    "description",
+						Usage:   "new description",
+						Aliases: []string{"d"},
+					},
+					&cli.StringFlag{
+						Name:    "timestamp",
+						Usage:   "new timestamp",
+						Aliases: []string{"t"},
+					},
+				},
+
+				Action:       middleware.ArgumentsCount(1, commands.UpdateCommand),
+				OnUsageError: handleUsageError,
+			},
 			{
 				Name:        "remove",
 				Category:    categoryTransactions,
