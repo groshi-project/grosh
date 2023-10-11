@@ -8,18 +8,19 @@ import (
 	"os"
 )
 
-const ErrorExitCode = 1
+const version = "0.1.0"
+const errorExitCode = 1
 
 func handleUsageError(ctx *cli.Context, err error, _ bool) error {
 	output.Error.Println(err)
 	output.Stdout.Printf("usage: %v", ctx.Command.UsageText)
-	os.Exit(ErrorExitCode)
+	os.Exit(errorExitCode)
 	return nil
 }
 
 func handleCommandNotFoundError(ctx *cli.Context, command string) {
 	output.Error.Printf("'%v' is not a %v command. See `%v --help`", command, ctx.App.Name, ctx.App.Name)
-	os.Exit(ErrorExitCode)
+	os.Exit(errorExitCode)
 }
 
 const categoryUser = "USER"
@@ -27,20 +28,21 @@ const categoryTransactions = "TRANSACTIONS"
 
 func main() {
 	app := &cli.App{
-		Name:        "grosh",
-		Usage:       "CLI groshi client",
-		UsageText:   "grosh command [command options] [arguments...]",
-		Version:     "0.1.0",
-		Description: "grosh is a simple CLI client for groshi",
+		Name:      "grosh",
+		Usage:     "a command-line client for groshi",
+		UsageText: "grosh <command> [COMMAND OPTIONS] [ARGUMENTS...]",
+		Version:   version,
+
+		Description: "grosh is a simple yet powerful command-line client for groshi",
 
 		Commands: []*cli.Command{
 			// USER category:
 			{
 				Name:        "register",
 				Category:    categoryUser,
-				Usage:       "create new groshi user",
+				Usage:       "create a new groshi user",
 				UsageText:   "grosh register <URL> [USERNAME]",
-				Description: "description",
+				Description: "creates a new user at a groshi server",
 
 				Action:       commands.RegisterCommand,
 				OnUsageError: handleUsageError,
@@ -48,9 +50,9 @@ func main() {
 			{
 				Name:        "login",
 				Category:    categoryUser,
-				Usage:       "login to groshi server and store credentials",
+				Usage:       "login to a groshi server and store credentials locally",
 				UsageText:   "grosh login <URL> [USERNAME]",
-				Description: "description",
+				Description: "obtains authorization token and stores it aside with server URL in a file",
 
 				Action:       commands.AuthCommand,
 				OnUsageError: handleUsageError,
@@ -60,7 +62,7 @@ func main() {
 				Category:    categoryUser,
 				Usage:       "remove locally stored credentials",
 				UsageText:   "groshi logout",
-				Description: "description",
+				Description: "removes file containing user credentials to access groshi server",
 
 				Action:       commands.CommandLogout,
 				OnUsageError: handleUsageError,
@@ -70,9 +72,9 @@ func main() {
 			{
 				Name:        "new",
 				Category:    categoryTransactions,
-				Usage:       "create new transaction",
+				Usage:       "create a new transaction",
 				UsageText:   "groshi new [--timestamp=<TIME>] [--description=<TEXT>] <AMOUNT> <CURRENCY>",
-				Description: "create new transaction",
+				Description: "creates a new transaction",
 
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -92,9 +94,9 @@ func main() {
 			{
 				Name:        "list",
 				Category:    categoryTransactions,
-				Usage:       "list transactions for given period and optionally in given currency",
+				Usage:       "list transactions in given period and optionally in given currency",
 				UsageText:   "groshi list [--uuid] [--currency=<CURRENCY>] [--end-time=<TIME>] <START-TIME>",
-				Description: "list transactions for given period",
+				Description: "retrieves list of all transactions in given period and optionally in given currency",
 
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -121,9 +123,9 @@ func main() {
 				Name:        "summary",
 				Category:    categoryTransactions,
 				Aliases:     []string{"sum"},
-				Usage:       "show summary of transactions for given period and optionally in given currency",
+				Usage:       "show summary of transactions for given period in given currency",
 				UsageText:   "groshi summary [--end-time=<END-TIME>] <START-TIME> <CURRENCY>",
-				Description: "description",
+				Description: "retrieves summary of transactions in given period and currency",
 
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -143,7 +145,7 @@ func main() {
 				Aliases:     []string{"rm"},
 				Usage:       "remove transaction",
 				UsageText:   "groshi remove <UUID>",
-				Description: "description??",
+				Description: "removes transaction by its UUID",
 
 				Action:       middleware.ArgumentsCount(1, commands.RemoveCommand),
 				OnUsageError: handleUsageError,
@@ -158,7 +160,7 @@ func main() {
 		Authors: []*cli.Author{
 			{"jieggii", "jieggii@protonmail.com"},
 		},
-		Copyright: "(c) groshi-project 2023",
+		Copyright: "(c) https://github.com/groshi-project 2023",
 	}
 
 	err := app.Run(os.Args)
