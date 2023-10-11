@@ -32,7 +32,10 @@ func ListCommand(ctx *cli.Context) error {
 
 	// option --currency:
 	currencyString := ctx.String("currency")
-	currency := input.ParseOptionalString(currencyString)
+	currency, err := input.ParseOptionalCurrency(currencyString)
+	if err != nil {
+		return err
+	}
 
 	authData, err := credentials.ReadFromDefaultPath()
 	if err != nil {

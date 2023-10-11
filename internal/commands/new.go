@@ -1,13 +1,11 @@
 package commands
 
 import (
-	"errors"
 	groshi "github.com/groshi-project/go-groshi"
 	"github.com/groshi-project/grosh/internal/credentials"
 	"github.com/groshi-project/grosh/internal/input"
 	"github.com/groshi-project/grosh/internal/output"
 	"github.com/urfave/cli/v2"
-	"strings"
 )
 
 // NewCommand is
@@ -23,10 +21,10 @@ func NewCommand(ctx *cli.Context) error {
 	}
 
 	// required argument CURRENCY:
-	currency := args.Get(1)
-	currency = strings.ToUpper(currency)
-	if len(currency) != 3 {
-		return errors.New("invalid currency format")
+	currencyString := args.Get(1)
+	currency, err := input.ParseCurrency(currencyString)
+	if err != nil {
+		return err
 	}
 
 	// option --description:
