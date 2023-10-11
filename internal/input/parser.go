@@ -1,8 +1,10 @@
 package input
 
 import (
+	"errors"
 	"github.com/markusmobius/go-dateparser"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -38,4 +40,22 @@ func ParseAmount(x string) (float64, error) {
 		x = "-" + x[0:len(x)-1]
 	}
 	return strconv.ParseFloat(x, 64)
+}
+
+func ParseCurrency(x string) (string, error) {
+	if len(x) != 3 {
+		return "", errors.New("invalid currency format")
+	}
+	return strings.ToUpper(x), nil
+}
+
+func ParseOptionalCurrency(x string) (*string, error) {
+	if x == "" {
+		return nil, nil
+	}
+	currency, err := ParseCurrency(x)
+	if err != nil {
+		return nil, err
+	}
+	return &currency, nil
 }
