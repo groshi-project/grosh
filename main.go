@@ -73,7 +73,7 @@ func main() {
 				Name:        "new",
 				Category:    categoryTransactions,
 				Usage:       "create a new transaction",
-				UsageText:   "groshi new [--timestamp=<TIME>] [--description=<TEXT>] <AMOUNT> <CURRENCY>",
+				UsageText:   "grosh new [--timestamp=<TIME>] [--description=<TEXT>] <AMOUNT> <CURRENCY>",
 				Description: "creates a new transaction",
 
 				Flags: []cli.Flag{
@@ -95,7 +95,7 @@ func main() {
 				Name:        "list",
 				Category:    categoryTransactions,
 				Usage:       "list transactions in given period and optionally in given currency",
-				UsageText:   "groshi list [--uuid] [--currency=<CURRENCY>] [--end-time=<TIME>] <START-TIME>",
+				UsageText:   "grosh list [--uuid] [--currency=<CURRENCY>] [--end-time=<TIME>] <START-TIME>",
 				Description: "retrieves list of all transactions in given period and optionally in given currency",
 
 				Flags: []cli.Flag{
@@ -124,7 +124,7 @@ func main() {
 				Category:    categoryTransactions,
 				Aliases:     []string{"sum"},
 				Usage:       "show summary of transactions for given period in given currency",
-				UsageText:   "groshi summary [--end-time=<END-TIME>] <START-TIME> <CURRENCY>",
+				UsageText:   "grosh summary [--end-time=<END-TIME>] <START-TIME> <CURRENCY>",
 				Description: "retrieves summary of transactions in given period and currency",
 
 				Flags: []cli.Flag{
@@ -143,7 +143,7 @@ func main() {
 				Category:    categoryTransactions,
 				Aliases:     []string{"upd"},
 				Usage:       "update transaction",
-				UsageText:   "groshi update [--amount=AMOUNT] [--currency=CURRENCY] [--description] [--timestamp] <UUID>",
+				UsageText:   "grosh update [--amount=AMOUNT] [--currency=CURRENCY] [--description=DESCRIPTION] [--timestamp=TIME] <UUID>",
 				Description: "updates transaction by its UUID",
 
 				Flags: []cli.Flag{
@@ -177,7 +177,7 @@ func main() {
 				Category:    categoryTransactions,
 				Aliases:     []string{"rm"},
 				Usage:       "remove transaction",
-				UsageText:   "groshi remove <UUID>",
+				UsageText:   "grosh remove <UUID>",
 				Description: "removes transaction by its UUID",
 
 				Action:       middleware.ArgumentsCount(1, commands.RemoveCommand),
