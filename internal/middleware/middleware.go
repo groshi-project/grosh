@@ -10,7 +10,7 @@ func ArgumentsCount(expectedArgsCount int, action cli.ActionFunc) cli.ActionFunc
 		argsLen := ctx.Args().Len()
 		if argsLen != expectedArgsCount {
 			return fmt.Errorf(
-				"invalid number of arguments (expected %v, got %v)", expectedArgsCount, argsLen,
+				"invalid number of arguments (expected %v, got %v)\nUsage: %v", expectedArgsCount, argsLen, ctx.Command.UsageText,
 			)
 		}
 		return action(ctx)
