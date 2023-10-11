@@ -5,7 +5,6 @@ import (
 	"github.com/groshi-project/grosh/internal/middleware"
 	"github.com/groshi-project/grosh/internal/output"
 	"github.com/urfave/cli/v2"
-	"log"
 	"os"
 )
 
@@ -137,6 +136,18 @@ func main() {
 				Action:       middleware.ArgumentsCount(2, commands.SummaryCommand),
 				OnUsageError: handleUsageError,
 			},
+
+			{
+				Name:        "remove",
+				Category:    categoryTransactions,
+				Aliases:     []string{"rm"},
+				Usage:       "remove transaction",
+				UsageText:   "groshi remove <UUID>",
+				Description: "description??",
+
+				Action:       middleware.ArgumentsCount(1, commands.RemoveCommand),
+				OnUsageError: handleUsageError,
+			},
 		},
 
 		OnUsageError:    handleUsageError,
@@ -150,7 +161,8 @@ func main() {
 		Copyright: "(c) groshi-project 2023",
 	}
 
-	if err := app.Run(os.Args); err != nil {
-		log.Fatal(err)
+	err := app.Run(os.Args)
+	if err != nil {
+		output.Error.Println(err)
 	}
 }
