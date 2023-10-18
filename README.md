@@ -16,28 +16,27 @@ sudo make install
 
 ## Implemented commands
 ### User
-#### Create a new groshi user:
+Create a new groshi user:
 * `grosh register <URL> [USERNAME]`
 
-#### Login to groshi server and store credentials locally:
-
+Login to groshi server and store credentials locally:
 * `grosh login <URL> [USERNAME]` 
 
-#### Remove locally stored credentials:
+Remove locally stored credentials:
 * `grosh logout` 
 
 ### Transactions
-#### Create a new transaction:
+Create a new transaction:
 * `grosh new [--timestamp=<TIME>] [--description=<TEXT>] <AMOUNT> <CURRENCY>`
 
-#### List transactions in given period and optionally in given currency:
+List transactions in given period and optionally in given currency:
 * `grosh list [--uuid] [--currency=<CURRENCY>] [--end-time=<TIME>] <START-TIME>` 
 
-#### Show summary of transactions for given period in given currency:
+Show summary of transactions for given period in given currency:
 * `grosh summary [--end-time=<END-TIME>] <START-TIME> <CURRENCY>`
 
-#### Update transaction:
+Update transaction:
 * `grosh update [--amount=AMOUNT] [--currency=CURRENCY] [--description=DESCRIPTION] [--timestamp=TIME] <UUID>` 
 
-#### Remove transaction:
+Remove transaction:
 * `grosh remove <UUID>` 
