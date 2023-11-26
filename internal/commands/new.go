@@ -8,8 +8,8 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// NewCommand is
-// grosh new [--description=<TEXT>] [--timestamp=<TIME>] <AMOUNT> <CURRENCY>
+// NewCommand creates a new transaction.
+// grosh new [--timestamp=<TIME>] [--description=<TEXT>] <AMOUNT> <CURRENCY>
 func NewCommand(ctx *cli.Context) error {
 	args := ctx.Args()
 
@@ -27,15 +27,15 @@ func NewCommand(ctx *cli.Context) error {
 		return err
 	}
 
-	// option --description:
-	description := ctx.String("description")
-
 	// option --timestamp:
 	timestampString := ctx.String("timestamp")
 	timestamp, err := input.ParseOptionalTime(timestampString)
 	if err != nil {
 		return err
 	}
+
+	// option --description:
+	description := ctx.String("description")
 
 	authData, err := credentials.ReadFromDefaultPath()
 	if err != nil {

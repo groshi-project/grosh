@@ -8,17 +8,20 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// AuthCommand logs in user with provided credentials.
+// todo: rename to LoginCommand
+// grosh login <URL> [USERNAME]
 func AuthCommand(ctx *cli.Context) error {
 	args := ctx.Args()
 
-	// url is a required argument
+	// required argument URL:
 	url := args.Get(0)
 
-	// username and password are optional arguments
+	// optional arguments USERNAME and PASSWORD:
 	username := args.Get(1)
 	password := args.Get(2)
 
-	// read username from stdout if it was not provided
+	// read USERNAME from stdout if it was not provided:
 	if username == "" {
 		var err error
 		if username, err = input.ReadString("Username: "); err != nil {
@@ -26,7 +29,7 @@ func AuthCommand(ctx *cli.Context) error {
 		}
 	}
 
-	// read password from stdout if it was not provided
+	// read PASSWORD from stdin if it was not provided:
 	if password == "" {
 		var err error
 		if password, err = input.ReadPassword("Password: "); err != nil {

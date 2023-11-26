@@ -8,8 +8,8 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// RegisterCommand ...
-// grosh register <URL> [username]
+// RegisterCommand creates a new user with provided credentials.
+// grosh register <URL> [USERNAME]
 func RegisterCommand(ctx *cli.Context) error {
 	args := ctx.Args()
 	argsCount := args.Len()
@@ -23,7 +23,8 @@ func RegisterCommand(ctx *cli.Context) error {
 	// optional argument USERNAME:
 	username := args.Get(1)
 
-	if username == "" { // if username was not provided
+	// read USERNAME from stdin if it was not provided:
+	if username == "" {
 		var err error
 		if username, err = input.ReadString("Username: "); err != nil {
 			return err

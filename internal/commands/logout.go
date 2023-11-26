@@ -9,6 +9,8 @@ import (
 	"os"
 )
 
+// CommandLogout logs out the user.
+// groshi logout
 func CommandLogout(_ *cli.Context) error {
 	credentialsStorageFilePath := credentials.GetCredentialsStorageFilePath()
 

@@ -9,19 +9,19 @@ import (
 	"time"
 )
 
-// SummaryCommand prints transactions summary for given period:
-// groshi summary [--end-time=<END-TIME>] <START-TIME> <CURRENCY>
+// SummaryCommand prints transactions summary for given period.
+// grosh summary [--end-time=<END-TIME>] <START-TIME> <CURRENCY>
 func SummaryCommand(ctx *cli.Context) error {
 	args := ctx.Args()
 
-	// START-TIME argument:
+	// required argument START-TIME:
 	startTimeString := args.Get(0)
 	startTime, err := input.ParseTime(startTimeString)
 	if err != nil {
 		return err
 	}
 
-	// CURRENCY argument:
+	// required argument CURRENCY:
 	currencyString := args.Get(1)
 	currency, err := input.ParseCurrency(currencyString)
 	if err != nil {
