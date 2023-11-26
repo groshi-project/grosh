@@ -56,7 +56,7 @@ func main() {
 				UsageText:   "grosh login <URL> [USERNAME]",
 				Description: "obtains authorization token and stores it aside with server URL in a file",
 
-				Action:       commands.AuthCommand,
+				Action:       commands.LoginCommand,
 				OnUsageError: handleUsageError,
 			},
 			{

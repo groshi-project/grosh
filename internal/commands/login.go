@@ -8,10 +8,9 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// AuthCommand logs in user with provided credentials.
-// todo: rename to LoginCommand
+// LoginCommand logs in user with provided credentials.
 // grosh login <URL> [USERNAME]
-func AuthCommand(ctx *cli.Context) error {
+func LoginCommand(ctx *cli.Context) error {
 	args := ctx.Args()
 
 	// required argument URL:
