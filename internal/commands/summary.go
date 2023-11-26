@@ -53,5 +53,6 @@ func SummaryCommand(ctx *cli.Context) error {
 	output.Stdout.Printf("There are %v transactions since %v to %v.", summary.TransactionsCount, startTime.Format(time.DateTime), endTime.Format(time.DateTime))
 	output.Stdout.Printf("+%v %v, -%v %v.", float64(summary.Income)/100, summary.Currency, float64(summary.Outcome)/100, summary.Currency)
 	output.Stdout.Printf("Total: %v %v.", float64(summary.Total)/100, summary.Currency)
+
 	return nil
 }

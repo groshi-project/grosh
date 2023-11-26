@@ -19,10 +19,10 @@ func GetCredentialsStorageFilePath() string {
 }
 
 type Credentials struct {
-	// URL of the groshi server
+	// URL of the groshi server.
 	URL string `json:"url"`
 
-	// Token for authorizing at the server
+	// Token for authorizing at the server.
 	Token string `json:"token"`
 }
 

@@ -12,11 +12,13 @@ import (
 func ReadString(promptText string) (string, error) {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print(promptText)
-	usernameRaw, err := reader.ReadString('\n')
+
+	text, err := reader.ReadString('\n')
 	if err != nil {
 		return "", err
 	}
-	return strings.Replace(usernameRaw, "\n", "", -1), nil
+
+	return strings.Replace(text, "\n", "", -1), nil
 }
 
 func ReadPassword(promptText string) (string, error) {
@@ -27,5 +29,6 @@ func ReadPassword(promptText string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	return string(passwordBytes), nil
 }
