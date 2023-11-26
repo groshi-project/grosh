@@ -1,7 +1,5 @@
 # grosh
 grosh is a simple command-line client for [groshi](https://github.com/groshi-project).
-> **grosh** is not released yet but has some stable useful functional already.
-> Use `make build` command to build it, run `./build/grosh --help` to get some help.
 
 ## Installation
 Build grosh binary:
@@ -15,6 +13,8 @@ sudo make install
 ```
 
 ## Implemented commands
+> Run `grosh --help` to see a help message.
+
 ### User
 Create a new groshi user:
 * `grosh register <URL> [USERNAME]`
