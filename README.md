@@ -40,3 +40,6 @@ Update transaction:
 
 Remove transaction:
 * `grosh remove <UUID>` 
+
+### Notes:
+* Place `-` char in the end of negative amounts, not in the beginning (e.g. `0.75-` will be interpreted as `-0.75`).
