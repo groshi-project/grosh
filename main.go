@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-const version = "0.1.1"
+const version = "0.1.2"
 const errorExitCode = 1
 
 func handleUsageError(ctx *cli.Context, err error, _ bool) error {
@@ -38,8 +38,10 @@ func main() {
 		Commands: []*cli.Command{
 			// USER category:
 			{
-				Name:        "register",
-				Category:    categoryUser,
+				Name:     "register",
+				Category: categoryUser,
+				Aliases:  []string{"reg"},
+
 				Usage:       "create a new groshi user",
 				UsageText:   "grosh register <URL> [USERNAME]",
 				Description: "creates a new user at a groshi server",
@@ -72,6 +74,7 @@ func main() {
 			{
 				Name:        "new",
 				Category:    categoryTransactions,
+				Aliases:     []string{"n"},
 				Usage:       "create a new transaction",
 				UsageText:   "grosh new [--timestamp=<TIME>] [--description=<TEXT>] <AMOUNT> <CURRENCY>",
 				Description: "creates a new transaction",
@@ -94,6 +97,7 @@ func main() {
 			{
 				Name:        "list",
 				Category:    categoryTransactions,
+				Aliases:     []string{"ls"},
 				Usage:       "list transactions in given period and optionally in given currency",
 				UsageText:   "grosh list [--uuid] [--currency=<CURRENCY>] [--end-time=<TIME>] <START-TIME>",
 				Description: "retrieves list of all transactions in given period and optionally in given currency",
@@ -141,7 +145,7 @@ func main() {
 			{
 				Name:        "update",
 				Category:    categoryTransactions,
-				Aliases:     []string{"upd"},
+				Aliases:     []string{"u"},
 				Usage:       "update transaction",
 				UsageText:   "grosh update [--amount=AMOUNT] [--currency=CURRENCY] [--description=DESCRIPTION] [--timestamp=TIME] <UUID>",
 				Description: "updates transaction by its UUID",
