@@ -8,14 +8,10 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// RegisterCommand creates a new user with provided credentials.
-// grosh register <URL> [USERNAME]
+// RegisterCommand creates a new groshi user with provided credentials.
+// Usage: grosh register <URL> [USERNAME].
 func RegisterCommand(ctx *cli.Context) error {
 	args := ctx.Args()
-	argsCount := args.Len()
-	if argsCount < 1 || argsCount > 2 {
-		return ctx.Command.OnUsageError(ctx, errors.New("invalid number of args"), true)
-	}
 
 	// required argument URL:
 	url := args.Get(0)

@@ -10,7 +10,7 @@ import (
 )
 
 // UpdateCommand updates transaction.
-// grosh update [--amount=AMOUNT] [--currency=CURRENCY] [--description=DESCRIPTION] [--timestamp=TIME] <UUID>
+// Usage: grosh update [--amount=AMOUNT] [--currency=CURRENCY] [--description=DESCRIPTION] [--timestamp=TIME] <UUID>.
 func UpdateCommand(ctx *cli.Context) error {
 	// required argument UUID:
 	uuid := ctx.Args().Get(0)

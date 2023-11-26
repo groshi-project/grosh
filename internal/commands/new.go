@@ -9,7 +9,7 @@ import (
 )
 
 // NewCommand creates a new transaction.
-// grosh new [--timestamp=<TIME>] [--description=<TEXT>] <AMOUNT> <CURRENCY>
+// Usage: grosh new [--timestamp=<TIME>] [--description=<TEXT>] <AMOUNT> <CURRENCY>.
 func NewCommand(ctx *cli.Context) error {
 	args := ctx.Args()
 

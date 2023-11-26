@@ -5,12 +5,26 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-func ArgumentsCount(expectedArgsCount int, action cli.ActionFunc) cli.ActionFunc {
+func ArgumentsCountStrict(count int, action cli.ActionFunc) cli.ActionFunc {
 	return func(ctx *cli.Context) error {
 		argsLen := ctx.Args().Len()
-		if argsLen != expectedArgsCount {
+		if argsLen != count {
 			return fmt.Errorf(
-				"invalid number of arguments (expected %v, got %v)\nUsage: %v", expectedArgsCount, argsLen, ctx.Command.UsageText,
+				"invalid number of arguments (expected %v, got %v)\nUsage: %v",
+				count, argsLen, ctx.Command.UsageText,
+			)
+		}
+		return action(ctx)
+	}
+}
+
+func ArgumentsCountVariable(minCount int, maxCount int, action cli.ActionFunc) cli.ActionFunc {
+	return func(ctx *cli.Context) error {
+		argsLen := ctx.Args().Len()
+		if argsLen < minCount || argsLen > maxCount {
+			return fmt.Errorf(
+				"invalid number of arguments (expected from %v to %v, got %v)\nUsage: %v",
+				minCount, maxCount, argsLen, ctx.Command.UsageText,
 			)
 		}
 		return action(ctx)

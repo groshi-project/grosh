@@ -8,8 +8,8 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// ListCommand lists all transactions for given period.
-// grosh list [--uuid] [--currency=<CURRENCY>] [--end-time=<TIME>] <START-TIME>
+// ListCommand lists transactions in given period and optionally in given currency.
+// Usage: grosh list [--uuid] [--currency=<CURRENCY>] [--end-time=<TIME>] <START-TIME>.
 func ListCommand(ctx *cli.Context) error {
 	args := ctx.Args()
 

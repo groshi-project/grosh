@@ -46,17 +46,17 @@ func main() {
 				UsageText:   "grosh register <URL> [USERNAME]",
 				Description: "creates a new user at a groshi server",
 
-				Action:       commands.RegisterCommand,
+				Action:       middleware.ArgumentsCountVariable(1, 2, commands.RegisterCommand),
 				OnUsageError: handleUsageError,
 			},
 			{
 				Name:        "login",
 				Category:    categoryUser,
 				Usage:       "login to a groshi server and store credentials locally",
-				UsageText:   "grosh login <URL> [USERNAME]",
+				UsageText:   "grosh login <URL> [USERNAME] [PASSWORD]",
 				Description: "obtains authorization token and stores it aside with server URL in a file",
 
-				Action:       commands.LoginCommand,
+				Action:       middleware.ArgumentsCountVariable(1, 2, commands.LoginCommand),
 				OnUsageError: handleUsageError,
 			},
 			{
@@ -66,7 +66,7 @@ func main() {
 				UsageText:   "groshi logout",
 				Description: "removes file containing user credentials to access groshi server",
 
-				Action:       commands.CommandLogout,
+				Action:       middleware.ArgumentsCountStrict(0, commands.CommandLogout),
 				OnUsageError: handleUsageError,
 			},
 
@@ -91,7 +91,7 @@ func main() {
 					},
 				},
 
-				Action:       middleware.ArgumentsCount(2, commands.NewCommand),
+				Action:       middleware.ArgumentsCountStrict(2, commands.NewCommand),
 				OnUsageError: handleUsageError,
 			},
 			{
@@ -120,7 +120,7 @@ func main() {
 					},
 				},
 
-				Action:       middleware.ArgumentsCount(1, commands.ListCommand),
+				Action:       middleware.ArgumentsCountStrict(1, commands.ListCommand),
 				OnUsageError: handleUsageError,
 			},
 			{
@@ -139,7 +139,7 @@ func main() {
 					},
 				},
 
-				Action:       middleware.ArgumentsCount(2, commands.SummaryCommand),
+				Action:       middleware.ArgumentsCountStrict(2, commands.SummaryCommand),
 				OnUsageError: handleUsageError,
 			},
 			{
@@ -173,7 +173,7 @@ func main() {
 					},
 				},
 
-				Action:       middleware.ArgumentsCount(1, commands.UpdateCommand),
+				Action:       middleware.ArgumentsCountStrict(1, commands.UpdateCommand),
 				OnUsageError: handleUsageError,
 			},
 			{
@@ -184,7 +184,7 @@ func main() {
 				UsageText:   "grosh remove <UUID>",
 				Description: "removes transaction by its UUID",
 
-				Action:       middleware.ArgumentsCount(1, commands.RemoveCommand),
+				Action:       middleware.ArgumentsCountStrict(1, commands.RemoveCommand),
 				OnUsageError: handleUsageError,
 			},
 		},

@@ -8,7 +8,7 @@ import (
 )
 
 // RemoveCommand removes transaction.
-// grosh remove <UUID>
+// Usage: grosh remove <UUID>.
 func RemoveCommand(ctx *cli.Context) error {
 	// required argument UUID:
 	uuid := ctx.Args().Get(0)

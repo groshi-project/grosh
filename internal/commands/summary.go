@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-// SummaryCommand prints transactions summary for given period.
-// grosh summary [--end-time=<END-TIME>] <START-TIME> <CURRENCY>
+// SummaryCommand show summary of transactions for given period in given currency.
+// Usage: grosh summary [--end-time=<END-TIME>] <START-TIME> <CURRENCY>.
 func SummaryCommand(ctx *cli.Context) error {
 	args := ctx.Args()
 

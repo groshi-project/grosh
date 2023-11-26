@@ -8,8 +8,8 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// LoginCommand logs in user with provided credentials.
-// grosh login <URL> [USERNAME]
+// LoginCommand obtains authorization token and stores it aside with server URL in a file.
+// Usage: grosh login <URL> [USERNAME] [PASSWORD].
 func LoginCommand(ctx *cli.Context) error {
 	args := ctx.Args()
 
