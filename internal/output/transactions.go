@@ -17,7 +17,7 @@ func Transactions(transactions []*groshi.Transaction, displayUUID bool) error {
 	for _, transaction := range transactions {
 		cols := []any{
 			transaction.Timestamp.In(time.Local).Format(time.DateTime),
-			transaction.Amount / 100,
+			float64(transaction.Amount) / 100,
 			transaction.Currency,
 			transaction.Description,
 		}
