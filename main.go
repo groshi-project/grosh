@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-const version = "0.1.2"
+const version = "0.1.3"
 const errorExitCode = 1
 
 func handleUsageError(ctx *cli.Context, err error, _ bool) error {
